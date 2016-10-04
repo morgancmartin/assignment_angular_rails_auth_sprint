@@ -1,16 +1,25 @@
-app = angular.module("authSprint", ["ui.router", 'restangular', 'Devise'])
+AuthSprint = angular.module("authSprint", ["ui.router", 'restangular', 'Devise']);
 
 
-MyApp.factory('_', ['$window', function(){
+AuthSprint.factory('_', ['$window', function(){
   return $window._;
 }]);
 
-MyApp.config(function($stateProvider, $urlRouterProvider) {
+AuthSprint.config(function($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise('/show');
 
+  $stateProvider.state("show", {
+    url: "/show",
+    views: {
+      "": {
+        templateUrl: "/templates/users/show.html.erb",
+        controller: "UsersCtrl"
+      }
+    }
+  });
+});
 
-})
-
-MyApp.config(
+AuthSprint.config(
   ["$httpProvider",
   function($httpProvider) {
   var token = $('meta[name=csrf-token]')
@@ -22,7 +31,7 @@ MyApp.config(
 }]);
 
 // Restangular config
-MyApp.config(
+AuthSprint.config(
   ['RestangularProvider',
   function(RestangularProvider) {
 
